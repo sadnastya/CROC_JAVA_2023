@@ -1,12 +1,13 @@
 package ru.croc.winter;
 
-public class Circle extends Annotation{
-    protected float x0_center;
-    protected float y0_center;
-    protected float radius;
+public class Circle extends Figure{
+    protected int x0_center;
+    protected int y0_center;
+    protected int radius;
 
-    Circle(float x0_center, float y0_center, float radius){
-        super("Круг", "Это круг");
+    protected final String figureName="круг";
+
+    public Circle(int x0_center, int y0_center, int radius) {
         this.x0_center = x0_center;
         this.y0_center = y0_center;
         this.radius = radius;
@@ -14,7 +15,8 @@ public class Circle extends Annotation{
     }
 
     @Override
-    public String toString(){
-        return figure + " центр: (" + x0_center +", " + y0_center + "), радиус: " + radius +" " + signature;
+    public void move(int dx, int dy) {
+        x0_center=x0_center+dx;
+        y0_center=y0_center+dy;
     }
 }

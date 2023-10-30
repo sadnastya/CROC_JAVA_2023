@@ -1,12 +1,13 @@
 package ru.croc.winter;
 
-public class Rectangle extends Annotation{
-    protected float x1_leftLower;
-    protected float y1_leftLower;
-    protected float x2_rightUpper;
-    protected float y2_rightUpper;
-    Rectangle(float x1, float y1, float x2, float y2){
-        super("Прямоугольник", "Это прямоугольник");
+public class Rectangle extends Figure{
+    protected int x1_leftLower;
+    protected int y1_leftLower;
+    protected int x2_rightUpper;
+    protected int y2_rightUpper;
+
+    protected final String figureName = "прямоугольник";
+    public Rectangle(int x1, int y1, int x2, int y2){
         this.x1_leftLower = x1;
         this.y1_leftLower = y1;
         this.x2_rightUpper = x2;
@@ -14,7 +15,11 @@ public class Rectangle extends Annotation{
     }
 
     @Override
-    public String toString(){
-        return figure + " левый нижний угол: (" + x1_leftLower +", " + y1_leftLower + "), правый верхний угол: (" + x2_rightUpper +", " + y2_rightUpper + ") " + signature;
+    public void move(int dx, int dy) {
+        x1_leftLower=x1_leftLower+dx;
+        y1_leftLower=y1_leftLower+dy;
+        x2_rightUpper=x2_rightUpper+dx;
+        y2_rightUpper=y2_rightUpper+dy;
+
     }
 }
