@@ -1,4 +1,4 @@
-package ru.croc.winter;
+package ru.croc.winter.nastyasad;
 
 public abstract class Figure implements Movable{
 

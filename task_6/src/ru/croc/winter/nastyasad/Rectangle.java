@@ -1,6 +1,8 @@
-package ru.croc.winter;
+package ru.croc.winter.nastyasad;
 
-public class Rectangle extends Figure{
+import ru.croc.winter.nastyasad.Figure;
+
+public class Rectangle extends Figure {
     protected int x1_leftLower;
     protected int y1_leftLower;
     protected int x2_rightUpper;

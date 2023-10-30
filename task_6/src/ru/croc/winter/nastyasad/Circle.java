@@ -1,6 +1,6 @@
-package ru.croc.winter;
+package ru.croc.winter.nastyasad;
 
-public class Circle extends Figure{
+public class Circle extends Figure {
     protected int x0_center;
     protected int y0_center;
     protected int radius;

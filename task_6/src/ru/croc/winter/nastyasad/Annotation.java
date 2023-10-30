@@ -1,4 +1,4 @@
-package ru.croc.winter;
+package ru.croc.winter.nastyasad;
 
 public class Annotation
 {
