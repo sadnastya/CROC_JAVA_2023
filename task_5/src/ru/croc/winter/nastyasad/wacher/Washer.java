@@ -1,6 +1,6 @@
 package ru.croc.winter.nastyasad.wacher;
 
-import ru.croc.winter.nastyasad.Appliances;
+import ru.croc.winter.nastyasad.main.Appliances;
 
 public class Washer extends Appliances {
     protected int weight;

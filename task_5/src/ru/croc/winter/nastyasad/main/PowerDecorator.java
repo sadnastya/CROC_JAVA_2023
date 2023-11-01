@@ -1,6 +1,6 @@
-package ru.croc.winter.nastyasad;
+package ru.croc.winter.nastyasad.main;
 
-public class PowerDecorator extends ProductDecorator{
+public class PowerDecorator extends ProductDecorator {
     protected double power;
 
     public PowerDecorator(Appliances appliances, double power){

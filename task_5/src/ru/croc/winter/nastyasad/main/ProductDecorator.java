@@ -1,6 +1,8 @@
-package ru.croc.winter.nastyasad;
+package ru.croc.winter.nastyasad.main;
 
-public abstract class ProductDecorator extends Appliances{
+import ru.croc.winter.nastyasad.main.Appliances;
+
+public abstract class ProductDecorator extends Appliances {
     protected Appliances appliances;
     public ProductDecorator(Appliances appliances){
         this.appliances=appliances;

@@ -1,6 +1,6 @@
 package ru.croc.winter.nastyasad.cooker;
 
-import ru.croc.winter.nastyasad.Appliances;
+import ru.croc.winter.nastyasad.main.Appliances;
 
 public abstract class Cooker extends Appliances {
     protected int burners;

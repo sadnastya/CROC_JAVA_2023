@@ -1,19 +1,19 @@
-package ru.croc.winter.nastyasad;
+package ru.croc.winter.nastyasad.main;
 
-import ru.croc.winter.nastyasad.cooker.Cooker;
 import ru.croc.winter.nastyasad.cooker.ElectricCooker;
 import ru.croc.winter.nastyasad.cooker.GasCooker;
 import ru.croc.winter.nastyasad.cooker.InductionCooker;
 import ru.croc.winter.nastyasad.fridge.Fridge;
 import ru.croc.winter.nastyasad.fridge.FridgeFreez;
 import ru.croc.winter.nastyasad.fridge.MiniFridge;
+import ru.croc.winter.nastyasad.main.Appliances;
+import ru.croc.winter.nastyasad.main.ImportDecorator;
+import ru.croc.winter.nastyasad.main.PowerDecorator;
 import ru.croc.winter.nastyasad.wacher.Washer;
 import ru.croc.winter.nastyasad.wacher.WasherDryer;
 
 
-public class
-
-Program{
+public class Program{
     protected static Appliances[] allProducts;
 
     public static void main(String[] args) {

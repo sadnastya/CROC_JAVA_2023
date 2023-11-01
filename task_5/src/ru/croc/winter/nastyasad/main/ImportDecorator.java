@@ -1,8 +1,6 @@
-package ru.croc.winter.nastyasad;
+package ru.croc.winter.nastyasad.main;
 
-import ru.croc.winter.nastyasad.fridge.Fridge;
-
-public class ImportDecorator extends ProductDecorator{
+public class ImportDecorator extends ProductDecorator {
     public ImportDecorator(Appliances appliances, String country, int guarantee){
         super(appliances);
         this.country=country;

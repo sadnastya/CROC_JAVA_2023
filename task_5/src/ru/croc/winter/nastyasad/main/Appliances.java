@@ -1,8 +1,8 @@
-package ru.croc.winter.nastyasad;
+package ru.croc.winter.nastyasad.main;
 
 public abstract class Appliances {
     public String category;
-    protected double price;
+    public double price;
     protected String brand;
     protected String country;
     protected int guarantee;

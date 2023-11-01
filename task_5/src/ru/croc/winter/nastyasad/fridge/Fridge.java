@@ -1,6 +1,6 @@
 package ru.croc.winter.nastyasad.fridge;
 
-import ru.croc.winter.nastyasad.Appliances;
+import ru.croc.winter.nastyasad.main.Appliances;
 
 public class Fridge extends Appliances {
     protected String temperature;
