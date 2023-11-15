@@ -8,7 +8,6 @@ import java.util.Set;
 public class WordsFilter implements BlackListFilter {
     List<String> cleanComments = new ArrayList<>();
 
-    @Override
     public void filterComments(List<String> comments, Set<String> blackList) {
         for (String comment : comments) {
             int flag = 0;

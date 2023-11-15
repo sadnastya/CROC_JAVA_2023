@@ -10,13 +10,13 @@ public class Program {
         WordsFilter cleanComments = new WordsFilter();
         List<String> comments = new ArrayList<>();
         comments.add("Книга, Море: Солнце.");
-        comments.add("Стол, стул" + "\n Небо");
+        comments.add("Стол, стул" + "\n нЕбО");
         comments.add("Солнце;^ лето: зима");
         comments.add("Небо");
         comments.add("Мороженое............Песок");
 
         Set<String> blackList = new HashSet<>();
-        blackList.add("Море");
+        blackList.add("МоРе");
         blackList.add("Небо");
         cleanComments.filterComments(comments, blackList);
 
