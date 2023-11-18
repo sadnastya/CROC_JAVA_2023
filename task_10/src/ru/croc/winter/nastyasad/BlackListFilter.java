@@ -9,9 +9,12 @@ import static java.util.stream.Collectors.toList;
 
 public interface BlackListFilter {
     default <T> List<T> filterComments(Predicate<T> predicate, Collection<T> collection){
-        List<T> newComments = collection.stream()
-                .filter(predicate)
-                .toList();
-        return newComments;
+        List<T> newComments = new ArrayList<>();
+        for (T objects : collection) {
+            if (predicate.test(objects)) {
+                newComments.add(objects);
+            }
+        }
+        return newComments.reversed();
     }
 }

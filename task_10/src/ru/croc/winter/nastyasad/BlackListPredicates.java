@@ -6,14 +6,14 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class BlackListPredicates {
-    public static <T> Predicate<T>  simpleFilter(Collection<T> blackList){
+    public static Predicate<String>  simpleFilter(CharSequence[] blackList ) {
 
         return p -> {
-            for (T badWord : blackList) {
-                if (p.equals(badWord)) {
-                        return false;
-                    }
+            for (CharSequence word : blackList) {
+                if (p.toLowerCase().contains(word)) {
+                    return false;
                 }
+            }
             return true;
         };
     }
