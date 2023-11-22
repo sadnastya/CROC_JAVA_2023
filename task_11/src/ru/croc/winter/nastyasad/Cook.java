@@ -1,26 +1,15 @@
 package ru.croc.winter.nastyasad;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class Cook {
-    protected String name;
-    protected boolean monday;
-    protected boolean tuesday;
-    protected boolean wednesday;
-    protected boolean thursday;
-    protected boolean friday;
-    protected boolean saturday;
-    protected boolean sunday;
+    public String name;
+    public Set<WeekDays> workDays;
 
-    protected Cook(String cookName, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday) {
+    public Cook(String cookName, Set<WeekDays> workDays) {
         this.name = cookName;
-        this.monday = monday;
-        this.tuesday = tuesday;
-        this.wednesday = wednesday;
-        this.thursday = thursday;
-        this.friday = friday;
-        this.saturday = saturday;
-        this.sunday = sunday;
+        this.workDays = workDays;
     }
 
     @Override

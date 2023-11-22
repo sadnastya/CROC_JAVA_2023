@@ -10,12 +10,16 @@ public class Dish {
     protected int gradeKing;
     protected int gradeCourtiers;
 
-    protected Dish(String name, String category, String[] ingredients, int gradeKing, int gradeCourtiers) {
+    public Dish (String name, String category, String[] ingredients, int gradeKing, int gradeCourtiers) throws IncorrectGradeException {
         this.name = name;
         this.category = category;
         this.ingredients = ingredients;
-        this.gradeKing = gradeKing;
-        this.gradeCourtiers = gradeCourtiers;
+        if(gradeKing>0 && gradeKing<101 && gradeCourtiers>0 && gradeCourtiers<101){
+            this.gradeKing=gradeKing;
+            this.gradeCourtiers = gradeCourtiers;
+        } else {
+            throw new IncorrectGradeException();
+        }
     }
 
     @Override
