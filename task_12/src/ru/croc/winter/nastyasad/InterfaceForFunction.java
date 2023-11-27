@@ -1,6 +1,6 @@
 package ru.croc.winter.nastyasad;
 @FunctionalInterface
-public interface InterfaceForFunction {
-    public String function();
+public interface InterfaceForFunction <T>{
+    public T function();
 
 }
