@@ -1,14 +1,12 @@
 package ru.croc.winter.nastyasad;
 
-import java.io.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
 
-        AuctionLot firstLot = LotsAndUsersReader.readLot("lot.txt");
+        AuctionLot firstLot = LotsAndUsersReader.readLot("lot.txt", LocalDateTime.now().plusSeconds(1));
 
         ArrayList<User> users = LotsAndUsersReader.readUsers("participants.txt", firstLot);
 
@@ -16,15 +14,14 @@ public class Main {
             new Thread(users.get(i)).start();
         }
 
+        firstLot.waitCloseLot(); //основной поток проверяет закончились ли торги(по времени или были ли они завершены в ручную)
+        System.out.println();
         try {
-            Thread.sleep(8000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            System.out.println(firstLot.getWinnerName());
+        } catch (LotNotSoldException e) {
+            System.out.println("Лот еще не продан, победитель не определен");
         }
 
-        firstLot.closeLot();
-        System.out.println();
-        System.out.println(firstLot.getWinnerName());
         System.out.println(firstLot.getCurrentPrice());
     }
 }

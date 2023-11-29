@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class AuctionLot {
-    protected BigDecimal currentPrice;
-    protected String name;
+    private BigDecimal currentPrice;
+    private String name;
     public final LocalDateTime endTime;
-    public final String lotName;
+    private final String lotName;
     private LotStatus currentStatus;
 
     public AuctionLot(String lotName, BigDecimal price, LocalDateTime endTime) {
@@ -17,6 +17,7 @@ public class AuctionLot {
         this.endTime = endTime;
         this.currentStatus = LotStatus.ACTIVE;
     }
+
     public synchronized void makeBid(String userName, BigDecimal newPrice) throws LotSoldException {
         LocalDateTime currentTime = LocalDateTime.now();
         if (currentStatus == LotStatus.ACTIVE && endTime.isAfter(currentTime)) {
@@ -30,18 +31,35 @@ public class AuctionLot {
             currentStatus = LotStatus.CLOSED;
         }
     }
+
+    public void waitCloseLot() {
+        while (currentStatus != LotStatus.CLOSED) {
+            if (endTime.isBefore(LocalDateTime.now())) {
+                closeLot();
+            }
+        }
+    }
+
     public void closeLot() {
-        this.currentStatus = LotStatus.CLOSED;
+        currentStatus = LotStatus.CLOSED;
     }
 
     public BigDecimal getCurrentPrice() {
         return currentPrice;
     }
-    public String getWinnerName() {
+
+    public String getWinnerName() throws LotNotSoldException {
         if (currentStatus == LotStatus.CLOSED) {
             return name;
+        } else if (endTime.isAfter(LocalDateTime.now())) {
+            currentStatus = LotStatus.CLOSED;
+            return name;
         } else {
-            return "Лот еще не продан";
+            throw new LotNotSoldException();
         }
+    }
+
+    public String getLotName() {
+        return lotName;
     }
 }

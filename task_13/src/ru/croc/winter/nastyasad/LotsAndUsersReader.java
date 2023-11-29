@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class LotsAndUsersReader {
-    public static AuctionLot readLot(String fileName) {
+    public static AuctionLot readLot(String fileName, LocalDateTime endTime) {
         String lotName;
         BigDecimal lotPrice;
         try (BufferedReader r = new BufferedReader(new FileReader(fileName))) {
@@ -17,7 +17,7 @@ public class LotsAndUsersReader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return new AuctionLot(lotName, lotPrice, LocalDateTime.now().plusDays(2));
+        return new AuctionLot(lotName, lotPrice, endTime);
     }
 
     public static ArrayList<User> readUsers(String fileName, AuctionLot lot) {

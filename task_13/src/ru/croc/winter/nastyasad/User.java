@@ -11,24 +11,32 @@ public class User implements Runnable {
         this.name = userName;
         this.lot = lot;
     }
+
     @Override
     public void run() {
         simulateBids();
     }
+
+    private static BigDecimal generateRandomBid(BigDecimal currentPrice) {
+        BigDecimal minBidIncrement = BigDecimal.valueOf(1_000); // Минимальное увеличение ставки
+        BigDecimal maxBidIncrease = BigDecimal.valueOf(5_000); // Максимальное увеличение ставки
+        BigDecimal randomIncrement = BigDecimal.valueOf(Math.random())
+                .multiply(maxBidIncrease.subtract(minBidIncrement))
+                .add(minBidIncrement); // Генерация случайного числа в диапазоне от минимального до максимального увеличения
+        return currentPrice.add(randomIncrement);
+    }
+
     private void simulateBids() {
         for (int i = 0; i < 100; i++) {
             try {
-                lot.makeBid(name, BigDecimal.valueOf(Math.random() * (10_000_000 - lot.currentPrice.intValue() + 1) + 10_000_000));
+                lot.makeBid(name, generateRandomBid(lot.getCurrentPrice()));
             } catch (LotSoldException e) {
-                e.getMessage();
+                break;
             }
         }
     }
-    public void makeRealBid(BigDecimal price) {
-        try {
-            lot.makeBid(name, price);
-        } catch (LotSoldException e) {
-            e.getMessage();
-        }
+
+    public void makeRealBid(BigDecimal price) throws LotSoldException {
+        lot.makeBid(name, price);
     }
 }
