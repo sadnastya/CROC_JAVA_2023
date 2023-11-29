@@ -13,12 +13,10 @@ public class Main {
     public static void main(String[] a)
             throws Exception {
         Connection conn = DriverManager.getConnection("jdbc:h2:mem:~/test", "sa", "");
-        DBCreator ourDB = new DBCreator("Data_pets.csv", conn);
-        Statement statement = ourDB.conn.createStatement();
+        DBCreator ourDB = new DBCreator(conn);
+        ourDB.CSVtoDB("Data_pets.csv");
 
-        Statement st = conn.createStatement();
-        st.executeUpdate("ALTER TABLE Client ALTER COLUMN idClient RESTART WITH 14;");
-        st.executeUpdate("ALTER TABLE Pet ALTER COLUMN idPet RESTART WITH 14;");
+        Statement statement = ourDB.conn.createStatement();
 
         ClientDAO daoClient = new ClientDAO(conn);
         PetDAO daoPet = new PetDAO(conn);
@@ -61,7 +59,7 @@ public class Main {
         System.out.println();
         System.out.println("Добавили питомца: ");
         List<Client> ownersToNewPet= new ArrayList<>();
-        ownersToNewPet.add(daoClient.findClient(14));
+        ownersToNewPet.add(daoClient.findClient(13));
         daoPet.createPet("Листик", 1, ownersToNewPet);
         ResultSet newResult4 = statement.executeQuery("SELECT * FROM Pet;");
         while (newResult4.next()) {
@@ -70,7 +68,7 @@ public class Main {
         }
 
         System.out.println();
-        System.out.println("Хозяева питомца с id = 14");
+        System.out.println("Хозяева питомца с id = 13");
         System.out.println(daoClient.getAllClientsOf(daoPet.findPet(14)));
 
         System.out.println();
