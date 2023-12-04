@@ -9,7 +9,6 @@ public class Client {
     private String name;
     private String surname;
     private String phoneNumber;
-    private List<Pet> pets;
 
     public Client(Integer id, String name, String surname, String phoneNumber) {
         this.id = id;
@@ -32,10 +31,6 @@ public class Client {
 
     public String getSurname() {
         return surname;
-    }
-
-    public List<Pet> getPets() {
-        return pets;
     }
 
     @Override

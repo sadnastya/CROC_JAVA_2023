@@ -8,9 +8,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDAO extends PetDAO {
+public class ClientDAO {
+    private final Connection conn;
     public ClientDAO(Connection conn) {
-        super(conn);
+        this.conn = conn;
     }
 
     public void createClient(Client client) throws ClientAlreadyExistsException {
@@ -46,14 +47,16 @@ public class ClientDAO extends PetDAO {
 
     public List<Client> getAllClientsOf(Pet pet) throws SQLException {
         List<Client> allClients = new ArrayList<Client>();
-
-        String findPets = "SELECT idClient FROM PetToClient WHERE idPet = ?";
+        String findPets = "SELECT * FROM Client " +
+                "JOIN PetToClient ON Client.idClient = PetToClient.idClient " +
+                "JOIN Pet ON Pet.idPet = PetToClient.idPet " +
+                "WHERE Pet.idPet = ?";
 
         try (PreparedStatement stant = conn.prepareStatement(findPets)) {
             stant.setInt(1, pet.getMedCard());
-            ResultSet clients = stant.executeQuery();
-            while (clients.next()) {
-                allClients.add(findClient(clients.getInt(1)));
+            ResultSet clientsToAdd = stant.executeQuery();
+            while (clientsToAdd.next()) {
+                allClients.add(new Client(clientsToAdd.getInt(1), clientsToAdd.getString(2), clientsToAdd.getString(3), clientsToAdd.getString(4)));
             }
         }
 
@@ -80,11 +83,35 @@ public class ClientDAO extends PetDAO {
         String delRelation = "DELETE FROM PetToClient WHERE idClient = ?";
 
         //проверяем, если у питомца(-ев) не останется хозяев, то его тоже удаляем, руководствуясь логикой, что клиент без питомца может быть, а питомец без клиента не может быть
-        List<Pet> petsForCheck = getAllPetsOf(findClient(id));
-        for (Pet pet : petsForCheck) {
-            List<Client> owners = getAllClientsOf(pet);
-            if (owners.size() < 2) {
-                deletePet(pet.getMedCard());
+        List<Pet> allPets = new ArrayList<Pet>();
+        Client client = findClient(id);
+
+        String findPets = "SELECT * FROM Pet " +
+                "JOIN PetToClient ON Pet.idPet = PetToClient.idPet " +
+                "JOIN Client ON Client.idClient = PetToClient.idClient " +
+                "WHERE Client.idClient = ?";
+
+        try (PreparedStatement stant = conn.prepareStatement(findPets)) {
+            stant.setInt(1, client.getId());
+            ResultSet petsIdForCheck = stant.executeQuery();
+            while (petsIdForCheck.next()) {
+                allPets.add(new Pet(petsIdForCheck.getInt(1), petsIdForCheck.getString(2), petsIdForCheck.getInt(3)));
+            }
+            for (Pet pet : allPets) {
+                List<Client> owners = getAllClientsOf(pet);
+                if (owners.size() < 2) {
+                    String delPet = "DELETE FROM Pet WHERE idPet = ?";
+
+                    String delRel = "DELETE FROM PetToClient WHERE idPet = ?";
+                    try (PreparedStatement statement = conn.prepareStatement(delPet)) {
+                        try (PreparedStatement st = conn.prepareStatement(delRel)) {
+                            st.setInt(1, pet.getMedCard());
+                            st.executeUpdate();
+                        }
+                        statement.setInt(1, pet.getMedCard());
+                        statement.executeUpdate();
+                    }
+                }
             }
         }
 
@@ -99,7 +126,7 @@ public class ClientDAO extends PetDAO {
     }
 
     public List<String> findClientPhoneNumbersBy(Pet pet) throws SQLException {
-        List<Client> clients = getAllClientsOf(pet);
+        List<Client> clients = getAllClientsOf(pet); //использует логику поиска всех клиентов питомца(где теперь все через один запрос), поэтому и этот метод получается делает один запрос :)
         List<String> phoneNumbers = new ArrayList<>();
         for(Client client: clients){
             phoneNumbers.add(client.getPhoneNumber());

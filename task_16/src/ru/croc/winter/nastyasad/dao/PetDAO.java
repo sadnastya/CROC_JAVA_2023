@@ -83,13 +83,16 @@ public class PetDAO {
     public List<Pet> getAllPetsOf(Client client) throws SQLException {
         List<Pet> allPets = new ArrayList<Pet>();
 
-        String findPets = "SELECT idPet FROM PetToClient WHERE idClient = ?";
+        String findPets = "SELECT * FROM Pet " +
+                "JOIN PetToClient ON Pet.idPet = PetToClient.idPet " +
+                "JOIN Client ON Client.idClient = PetToClient.idClient " +
+                "WHERE Client.idClient = ?";
 
         try (PreparedStatement stant = conn.prepareStatement(findPets)) {
             stant.setInt(1, client.getId());
             ResultSet petsIdForCheck = stant.executeQuery();
             while (petsIdForCheck.next()) {
-                allPets.add(findPet(petsIdForCheck.getInt(1)));
+                allPets.add(new Pet(petsIdForCheck.getInt(1), petsIdForCheck.getString(2), petsIdForCheck.getInt(3)));
             }
         }
 
